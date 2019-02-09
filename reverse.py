@@ -82,6 +82,7 @@ class Servidor_SOCKET:
                     CLIENTE.send(str.encode(comando))
                     CLIENTE.close()
                     os.system('clear')
+                    os.system('cls')
                     break
 
                 elif 'help' in comando:
@@ -90,6 +91,7 @@ class Servidor_SOCKET:
                 elif 'limpar' in comando:
                     CLIENTE.send(str.encode(comando))
                     os.system('clear')
+                    os.system('cls')
 
                 elif 'infocliente' in comando:
                     CLIENTE.send(str.encode(comando))
@@ -147,6 +149,7 @@ def main():
 
         if '1' in opcao:
             os.system('clear')
+            os.system('cls')
             IP=str(input(Texto.inputs+'[->]'+Texto.reset+' IPv4: '))
             PORTA=int(input(Texto.inputs+'[->]'+Texto.reset+' PORTA: '))
             S=Servidor_SOCKET(IP,PORTA)
@@ -155,10 +158,9 @@ def main():
 
         elif '2' in opcao:
             os.system('clear')
+            os.system('cls')
             print('Developer: Joeru'+Texto.epty+'<3'+Texto.reset)
-            print('Github Profile: https://github.com/Joerito\n')
-            os.system('pause')
-            os.system('clear')
+            print('Github Profile: https://github.com/Joerito\n\n\n')
         elif '3' in opcao:
             break
 
