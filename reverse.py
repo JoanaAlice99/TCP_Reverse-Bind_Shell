@@ -119,7 +119,7 @@ class Servidor_SOCKET:
                     else:
                         ficheiro_nome=comando[5:]
                         CLIENTE.send(str.encode(comando))
-                        dados_rcv=str(CLIENTE.recv(),'utf-8')
+                        dados_rcv=str(CLIENTE.recv(2048),'utf-8')
                         if 'FILE_NF' in dados_rcv:
                             Texto.Mensagem(2,'Ficheiro Nao Encontrado')
                         elif 'NOT_FILE' in dados_rcv:
