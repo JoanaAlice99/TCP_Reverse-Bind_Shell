@@ -109,6 +109,7 @@ class Cliente_SOCKET:
 
             elif 'limpar' in pacotes_rcv:
                 os.system('cls')
+                os.system('clear')
 
             elif 'infocliente' in pacotes_rcv:
                 self.SOCKET.send(str.encode(Plat.Mostrar_Info()))
