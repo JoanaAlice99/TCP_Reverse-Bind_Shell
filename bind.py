@@ -133,9 +133,11 @@ class Cliente_SOCKET:
                 try:
                     ficheiro=open(ficheiro_nome,'r')
                 except FileNotFoundError:
-                    S.SOCKET.send(str.encode('FILE_NF'))
+                    self.SOCKET.send(str.encode('FILE_NF'))
                 except PermissionError:
-                    S.SOCKET.send(str.encode('NOT_FILE'))
+                    self.SOCKET.send(str.encode('NOT_FILE'))
+                except IsADirectoryError:
+                    self.SOCKET.send(str.encode('NOT_FILE'))
                 else:
                     ficheiro_dados=ficheiro.read()
                     ficheiro.close()

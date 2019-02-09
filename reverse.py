@@ -70,7 +70,7 @@ class Servidor_SOCKET:
         CLIENTE, ENDERECO   = self.SOCKET.accept()
         Cliente_Endereco    = str(ENDERECO)
 
-        Texto.Mensagem(0,'O Cliente: '+Cliente_Endereco+' entrou no Servidor\n\n      [help] - Para mais informacao\n')
+        Texto.Mensagem(0,'O Cliente: '+Cliente_Endereco+' entrou no Servidor\n\n\t[help] - Para mais informacao\n')
 
         while True:
 
@@ -81,7 +81,7 @@ class Servidor_SOCKET:
                 if 'sair' in comando:
                     CLIENTE.send(str.encode(comando))
                     CLIENTE.close()
-                    os.system('cls')
+                    os.system('clear')
                     break
 
                 elif 'help' in comando:
@@ -89,11 +89,11 @@ class Servidor_SOCKET:
 
                 elif 'limpar' in comando:
                     CLIENTE.send(str.encode(comando))
-                    os.system('cls')
+                    os.system('clear')
 
                 elif 'infocliente' in comando:
                     CLIENTE.send(str.encode(comando))
-                    dados_rcv=str(CLIENTE.recv(1024),'utf-8')
+                    dados_rcv=str(CLIENTE.recv(2048),'utf-8')
                     print('Cliente:',ENDERECO)
                     print(dados_rcv)
 
@@ -102,7 +102,7 @@ class Servidor_SOCKET:
                         Texto.Mensagem(2,'chdir [DIRETORIO]')
                     else:
                         CLIENTE.send(str.encode(comando))
-                        dados_rcv=str(CLIENTE.recv(1024),'utf-8')
+                        dados_rcv=str(CLIENTE.recv(2048),'utf-8')
 
                         if 'DIR_NA' in dados_rcv:
                             Texto.Mensagem(2,'Diretorio Nao Encontrado')
@@ -119,7 +119,7 @@ class Servidor_SOCKET:
                     else:
                         ficheiro_nome=comando[5:]
                         CLIENTE.send(str.encode(comando))
-                        dados_rcv=str(CLIENTE.recv(1024),'utf-8')
+                        dados_rcv+=str(CLIENTE.recv(),'utf-8')
                         if 'FILE_NF' in dados_rcv:
                             Texto.Mensagem(2,'Ficheiro Nao Encontrado')
                         elif 'NOT_FILE' in dados_rcv:
@@ -131,7 +131,7 @@ class Servidor_SOCKET:
 
                 else:
                     CLIENTE.send(str.encode(comando))
-                    dados_rcv=str(CLIENTE.recv(1024),'utf-8')
+                    dados_rcv+=str(CLIENTE.recv(2048),'utf-8')
                     print(dados_rcv)
             else:
                 pass
@@ -146,7 +146,7 @@ def main():
         opcao = str(input('Selecione uma opcao> '))
 
         if '1' in opcao:
-            os.system('cls')
+            os.system('clear')
             IP=str(input(Texto.inputs+'[->]'+Texto.reset+' IPv4: '))
             PORTA=int(input(Texto.inputs+'[->]'+Texto.reset+' PORTA: '))
             S=Servidor_SOCKET(IP,PORTA)
@@ -154,11 +154,11 @@ def main():
             S.Comandos()
 
         elif '2' in opcao:
-            os.system('cls')
+            os.system('clear')
             print('Developer: Joeru'+Texto.epty+'<3'+Texto.reset)
             print('Github Profile: https://github.com/Joerito\n')
             os.system('pause')
-            os.system('cls')
+            os.system('clear')
         elif '3' in opcao:
             break
 
