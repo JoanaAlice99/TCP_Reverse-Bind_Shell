@@ -213,3 +213,6 @@ def main():
             break
 
 main()#O programa começa aqui
+
+if __name__ == "__main__":
+    main()

@@ -205,5 +205,6 @@ def main():
 
 main()#O programa começa aqui
 
-
+if __name__ == "__main__":
+    main()
         
