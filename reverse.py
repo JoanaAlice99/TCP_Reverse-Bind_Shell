@@ -212,7 +212,7 @@ def main():
         elif '3' in opcao:
             break
 
-main()#O programa começa aqui
+main()
 
 if __name__ == "__main__":
     main()

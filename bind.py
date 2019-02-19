@@ -203,7 +203,7 @@ def main():
     S.Preparar_Conection()
     S.Comandos()
 
-main()#O programa começa aqui
+main()
 
 if __name__ == "__main__":
     main()
